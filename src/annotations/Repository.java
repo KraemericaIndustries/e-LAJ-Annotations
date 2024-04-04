@@ -1,8 +1,5 @@
 package annotations;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 public class Repository<T> {
 
 	public void save(T t) {
@@ -15,17 +12,20 @@ public class Repository<T> {
 			
 			var annotations = field.getAnnotationsByType(Field.class);
 			
-			if(annotations.length > 0) {
-				System.out.println(field);
+			if(annotations.length == 0) {
+				continue;
 			}	
+			
+			var annotation = annotations[0];
+			
+			var fieldName = annotation.value();
+			var isKey = annotation.isKey();
+			
+			if(fieldName.length() == 0) {
+				fieldName = field.getName();
+			}
+			
+			System.out.println(fieldName + " " + isKey);
 		}
-		// @formatter:off
-		var fieldList = Arrays
-			.stream(clazz.getDeclaredFields())
-			.filter(f -> f.getAnnotationsByType(Field.class).length > 0)
-			.collect(Collectors.toList());
-		// @formatter:on
-		System.out.println();
-		System.out.println(fieldList);
 	}
 }
