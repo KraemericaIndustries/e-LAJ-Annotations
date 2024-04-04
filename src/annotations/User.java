@@ -1,8 +1,9 @@
 package annotations;
 
+@Entity("userABC")
 public class User {
 
-	@Field(value="id", isKey=true)
+	@Field(columnName="id", isKey=true)
 	private Long id;
 	
 	@Field()
