@@ -1,5 +1,8 @@
 package annotations;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 public class Repository<T> {
 
 	public void save(T t) {
@@ -13,9 +16,9 @@ public class Repository<T> {
 			tableName = classAnnotations[0].value();
 		}
 		
-		System.out.println(tableName);
-		
 		var fields = clazz.getDeclaredFields();
+		
+		ArrayList<String> fieldList = new ArrayList<>();
 		
 		for(var field : fields) {
 			
@@ -34,7 +37,16 @@ public class Repository<T> {
 				fieldName = field.getName();
 			}
 			
-			System.out.println(fieldName + " " + isKey);
+			if(!isKey) {
+				fieldList.add(fieldName);
+			}
 		}
+		
+		String sqlFields = fieldList.stream().collect(Collectors.joining(","));
+		String sqlPlaceholders = fieldList.stream().map(s -> "?").collect(Collectors.joining(","));
+		
+		String sql = String.format("insert into %s (%s) values (%s)", tableName, sqlFields, sqlPlaceholders);
+		
+		System.out.println(sql);
 	}
 }

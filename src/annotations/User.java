@@ -1,6 +1,6 @@
 package annotations;
 
-@Entity("userABC")
+@Entity("user")
 public class User {
 
 	@Field(columnName="id", isKey=true)
@@ -8,6 +8,9 @@ public class User {
 	
 	@Field()
 	private String name;
+	
+	@Field
+	private String password;
 	
 	private int sequence;
 	
