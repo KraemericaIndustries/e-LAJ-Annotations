@@ -2,11 +2,10 @@ package annotations;
 
 public class User {
 
-	@Field
-	@Deprecated
+	@Field(value="id", isKey=true)
 	private Long id;
 	
-	@Field
+	@Field()
 	private String name;
 	
 	private int sequence;
